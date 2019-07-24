@@ -15,7 +15,7 @@ ANONYMOUS_USERNAME = ''
 def load_user_dict(path):
     global user_dict
     with open(path, 'r') as stream:
-        user_dict = yaml.load(stream)
+        user_dict = yaml.load(stream, Loader=yaml.BaseLoader)
 
 def redmine_username_to_gitlab_username(redmine_username):
     if user_dict is not None and redmine_username in user_dict:
