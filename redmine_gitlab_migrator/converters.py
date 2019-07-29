@@ -86,7 +86,7 @@ def convert_notes(redmine_issue_journals, redmine_user_index, gitlab_user_index,
                 author = ANONYMOUS_USERNAME
                 gitlab_author_found = False
 
-            if not sudo or not gitlab_author_found:
+            if not sudo or not gitlab_author_found or author == 'root':
                 creator_text = " by {}".format(author_name)
             else:
                 creator_text = ''
