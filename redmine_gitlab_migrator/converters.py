@@ -233,7 +233,7 @@ def convert_issue(redmine_api_key, redmine_issue, redmine_user_index, gitlab_use
         author_login = ANONYMOUS_USERNAME
         gitlab_author_found = False
 
-    if not sudo or not gitlab_author_found:
+    if not sudo or not gitlab_author_found or author_login == 'root':
         creator_text = ' by {}'.format(redmine_issue['author']['name'])
     else:
         creator_text = ''
@@ -274,6 +274,9 @@ def convert_issue(redmine_api_key, redmine_issue, redmine_user_index, gitlab_use
         try:
             data['assignee_id'] = redmine_uid_to_gitlab_user(
                 assigned_to['id'], redmine_user_index, gitlab_user_index)['id']
+            if data['assignee_id'] == 1:
+                data['assignee_id'] = None
+                data['labels'] = data['labels'] + ',' + 'Assigned to ' + assigned_to['name']
         except KeyError:
             # add original assignee as label
             log.warning('Redmine issue #{} assignee is unknown, adding label "{}"'.format(redmine_issue['id'], assigned_to['name']))

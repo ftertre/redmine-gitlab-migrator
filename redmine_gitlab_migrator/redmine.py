@@ -4,7 +4,7 @@ import re
 from . import APIClient, Project
 from requests.exceptions import HTTPError
 
-ANONYMOUS_USER_ID = 2
+ANONYMOUS_USER_ID = -1
 
 class RedmineClient(APIClient):
     PAGE_MAX_SIZE = 100
